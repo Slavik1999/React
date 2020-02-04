@@ -1,0 +1,72 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+.container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.header{
+    width: 800px;
+    font-size: 40px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.input{
+    padding-bottom: 10px;
+    width: 800px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 3px;
+}
+.inputInfo{
+    height: 40px;
+    font-size: 30px;
+    font-family: 'Times New Roman', Times, serif;
+    border-radius: 5px;
+    margin-right: 4px;
+    border: 2px solid green;
+}
+.addBtn{
+    height: 46px;
+    font-size: 25px;
+    font-family: 'Times New Roman', Times, serif;
+    border: 2px solid green;
+    border-radius: 5px;
+    margin-right: 4px;
+}
+.addBtn:hover{
+    cursor: pointer;
+    background-color: rgb(186, 219, 173);
+}
+.findBtn{
+    height: 46px;
+    font-size: 25px;
+    font-family: 'Times New Roman', Times, serif;
+    border: 2px solid green;
+    border-radius: 5px;
+}
+.findBtn:hover{
+    cursor: pointer;
+    background-color: rgb(186, 219, 173);
+}
+.list{
+    width: 800px;
+    font-size: 25px;
+    font-family: 'Times New Roman', Times, serif;
+}
+.listItem{
+    height: 40px;
+    border-bottom: 1px solid black;
+}
+.listItem:hover{
+    background-color: rgba(0,0,0,0.2);;
+}
