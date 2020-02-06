@@ -1,0 +1,26 @@
+.btnsSearch{
+    width: 200px;
+}
+.btnAll, .btnActive, .btnDone{
+    width: 61px;
+    height: 39px;
+    font-size: 14px;
+
+    background-color: white;
+
+    border: 2px solid rgba(79,170,179);
+
+    outline: none;
+}
+.btnAll:hover, .btnActive:hover, .btnDone:hover{
+    cursor: pointer;
+}
+.btnAll{
+    background-color:rgba(79,170,179) ;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+.btnDone{
+    border-top-right-radius: 5px;
+    border-bottom-right-radius:5px;
+}

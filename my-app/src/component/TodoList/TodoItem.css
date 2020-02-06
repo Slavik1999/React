@@ -1,0 +1,40 @@
+.listItem{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px 10px 20px;
+    
+    font-size: 25px;
+
+    border: 1px solid rgba(0,0,0,0.3);
+    border-radius: 2px;
+}
+
+.iconContiner{
+    display: flex;
+    justify-content: space-between;
+
+    width: 70px;
+}
+
+.icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 32px;
+    height: 32px;
+
+    font-size: 14px;
+
+    background-color: white;
+    color: rgb(79,170,179);
+
+    border: 1.5px solid rgba(0,0,0,0.5);
+    border-radius: 3px;
+
+    outline: none;
+}
+
+.icon:hover{
+    cursor: pointer;
+}

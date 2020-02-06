@@ -1,0 +1,10 @@
+.search{
+    width: 314px;
+
+    padding: 10px;
+    margin-right: 5px;
+
+    border-radius: 5px;
+
+    outline: none;
+}

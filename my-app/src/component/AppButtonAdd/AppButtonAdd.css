@@ -1,0 +1,19 @@
+.btnAdd{
+    width: 61px;
+    height: 39px;
+    font-size: 16px;
+    
+    color: rgb(79,170,179);
+    background-color: white;
+
+    border: 2px solid rgb(79,170,179);
+    border-radius: 5px;
+
+    outline: none;
+}
+.btnAdd:hover{
+    cursor: pointer;
+}
+.btnAdd:hover{
+    background-color: rgba(79,170,179,0.4);
+}
