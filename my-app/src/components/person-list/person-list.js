@@ -41,8 +41,8 @@ export default class PeopleList extends Component {
   render() {
     const { person, loading, getError } = this.state;
     const error = getError ? <Error /> : null;
-    const spinner = loading && !error ? <Spinner /> : null;
-    const content = !loading ? <ItemView person={person} /> : null;
+    const spinner = loading && !getError ? <Spinner /> : null;
+    const content = !loading && !getError ? <ItemView person={person} /> : null;
 
     return (
       <div>

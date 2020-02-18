@@ -41,8 +41,8 @@ export default class PlanetList extends Component {
   render() {
     const { planet, loading, getError } = this.state;
     const error = getError ? <Error /> : null;
-    const spinner = loading && !error ? <Spinner /> : null;
-    const content = !loading ? <ItemView planet={planet} /> : null;
+    const spinner = loading && !getError ? <Spinner /> : null;
+    const content = !loading && !getError ? <ItemView planet={planet} /> : null;
 
     return (
       <div>

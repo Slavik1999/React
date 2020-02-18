@@ -42,8 +42,9 @@ export default class PlanetDetails extends Component {
   render() {
     const { person, loading, getError } = this.state;
     const error = getError ? <Error /> : null;
-    const spinner = loading && !error ? <Spinner /> : null;
-    const content = !loading ? <PersonView person={person} /> : null;
+    const spinner = loading && !getError ? <Spinner /> : null;
+    const content =
+      !loading && !getError ? <PersonView person={person} /> : null;
 
     return (
       <div className="random-planet jumbotron rounded">
