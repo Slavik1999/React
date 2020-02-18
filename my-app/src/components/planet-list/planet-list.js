@@ -2,12 +2,11 @@ import React, { Component } from "react";
 
 import Spinner from "../spinner";
 import Error from "../error";
-import PlanetView from "../planet-view";
 import SwapiService from "../../services/swapi-service";
 
-import "./random-planet.css";
+import "./planet-list.css";
 
-export default class RandomPlanet extends Component {
+export default class PlanetList extends Component {
   swapiService = new SwapiService();
 
   state = {
@@ -21,31 +20,32 @@ export default class RandomPlanet extends Component {
     this.updatePlanet();
   }
 
-  onPlanetLoaded = planet => {
-    this.setState({
-      planet,
-      loading: false
-    });
-  };
   Error = () => {
     this.setState({
       getError: true
     });
   };
 
+  onPlanetLoaded = planet => {
+    this.setState({
+      planet,
+      loading: false
+    });
+  };
+
   updatePlanet() {
     const id = 3;
-    this.swapiService.getPlanet(id).then(this.onPlanetLoaded, this.Error);
+    this.swapiService.getAllPlanets().then(this.onPlanetLoaded, this.Error);
   }
 
   render() {
     const { planet, loading, getError } = this.state;
     const error = getError ? <Error /> : null;
     const spinner = loading && !error ? <Spinner /> : null;
-    const content = !loading ? <PlanetView planet={planet} /> : null;
+    const content = !loading ? <ItemView planet={planet} /> : null;
 
     return (
-      <div className="random-planet jumbotron rounded">
+      <div>
         {error}
         {spinner}
         {content}
@@ -53,3 +53,16 @@ export default class RandomPlanet extends Component {
     );
   }
 }
+
+const ItemView = ({ planet }) => {
+  const elements = planet.map(item => {
+    const { name } = item;
+    return (
+      <li className="list-group-item" key={name} name={name}>
+        {name}
+      </li>
+    );
+  });
+
+  return <ul className="item-list list-group">{elements}</ul>;
+};
