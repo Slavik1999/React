@@ -18,7 +18,9 @@ export default class StarshipList extends Component {
   };
 
   componentDidMount() {
-    this.swapiService.getAllStarships().then(this.onStarshipLoaded, this.Error);
+    this.swapiService
+      .getAllStarships()
+      .then(this.onStarshipLoaded, this.onError);
   }
 
   componentDidCatch() {
@@ -27,7 +29,7 @@ export default class StarshipList extends Component {
     });
   }
 
-  Error = () => {
+  onError = () => {
     this.setState({
       errorNetwork: true
     });

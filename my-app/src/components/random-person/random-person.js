@@ -38,7 +38,7 @@ export default class RandomPerson extends Component {
       loading: false
     });
   };
-  Error = () => {
+  onError = () => {
     this.setState({
       errorNetwork: true
     });
@@ -46,7 +46,7 @@ export default class RandomPerson extends Component {
 
   updatePerson = () => {
     const id = Math.floor(Math.random() * 20 + 1);
-    this.swapiService.getPerson(id).then(this.onPersonLoaded, this.Error);
+    this.swapiService.getPerson(id).then(this.onPersonLoaded, this.onError);
   };
 
   render() {

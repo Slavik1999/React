@@ -28,7 +28,7 @@ export default class StarshipDetails extends Component {
       });
       this.swapiService
         .getStarship(this.props.selectedItem)
-        .then(this.onStarshipLoaded, this.Error);
+        .then(this.onStarshipLoaded, this.onError);
     }
   }
 
@@ -38,7 +38,7 @@ export default class StarshipDetails extends Component {
     });
   }
 
-  Error = () => {
+  onError = () => {
     this.setState({
       errorNetwork: true
     });

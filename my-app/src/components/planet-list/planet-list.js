@@ -18,7 +18,7 @@ export default class PlanetList extends Component {
   };
 
   componentDidMount() {
-    this.swapiService.getAllPlanets().then(this.onPlanetLoaded, this.Error);
+    this.swapiService.getAllPlanets().then(this.onPlanetLoaded, this.onError);
   }
 
   componentDidCatch() {
@@ -27,7 +27,7 @@ export default class PlanetList extends Component {
     });
   }
 
-  Error = () => {
+  onError = () => {
     this.setState({
       errorNetwork: true
     });

@@ -18,7 +18,7 @@ export default class PeopleList extends Component {
   };
 
   componentDidMount() {
-    this.swapiService.getAllPeople().then(this.onPersonLoaded, this.Error);
+    this.swapiService.getAllPeople().then(this.onPersonLoaded, this.onError);
   }
 
   componentDidCatch() {
@@ -27,7 +27,7 @@ export default class PeopleList extends Component {
     });
   }
 
-  Error = () => {
+  onError = () => {
     this.setState({
       errorNetwork: true
     });

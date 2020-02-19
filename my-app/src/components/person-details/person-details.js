@@ -28,7 +28,7 @@ export default class PlanetDetails extends Component {
       });
       this.swapiService
         .getPerson(this.props.selectedItem)
-        .then(this.onPersonLoaded, this.Error);
+        .then(this.onPersonLoaded, this.onError);
     }
   }
 
@@ -38,7 +38,7 @@ export default class PlanetDetails extends Component {
     });
   }
 
-  Error = () => {
+  onError = () => {
     this.setState({
       errorNetwork: true
     });

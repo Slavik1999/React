@@ -38,7 +38,7 @@ export default class RandomPlanet extends Component {
       loading: false
     });
   };
-  Error = () => {
+  onError = () => {
     this.setState({
       errorNetwork: true
     });
@@ -46,7 +46,7 @@ export default class RandomPlanet extends Component {
 
   updatePlanet = () => {
     const id = Math.floor(Math.random() * 60 + 1);
-    this.swapiService.getPlanet(id).then(this.onPlanetLoaded, this.Error);
+    this.swapiService.getPlanet(id).then(this.onPlanetLoaded, this.onError);
   };
 
   render() {
