@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 
 import Spinner from "../spinner";
-import Error from "../error";
+import ErrorNetwork from "../error-network";
+import ErrorFront from "../error-front";
 import PlanetView from "../planet-view";
 import SwapiService from "../../services/swapi-service";
 
@@ -13,12 +14,22 @@ export default class RandomPlanet extends Component {
   state = {
     planet: {},
     loading: true,
-    getError: false
+    errorNetwork: false,
+    errorFront: false
   };
 
-  constructor() {
-    super();
-    this.updatePlanet();
+  componentDidMount() {
+    this.interval = setInterval(this.updatePlanet, 5000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  componentDidCatch() {
+    this.setState({
+      errorFront: true
+    });
   }
 
   onPlanetLoaded = planet => {
@@ -29,25 +40,29 @@ export default class RandomPlanet extends Component {
   };
   Error = () => {
     this.setState({
-      getError: true
+      errorNetwork: true
     });
   };
 
-  updatePlanet() {
-    const id = 3;
+  updatePlanet = () => {
+    const id = Math.floor(Math.random() * 60 + 1);
     this.swapiService.getPlanet(id).then(this.onPlanetLoaded, this.Error);
-  }
+  };
 
   render() {
-    const { planet, loading, getError } = this.state;
-    const error = getError ? <Error /> : null;
-    const spinner = loading && !getError ? <Spinner /> : null;
+    const { planet, loading, errorNetwork } = this.state;
+    const errorNet = errorNetwork ? <ErrorNetwork /> : null;
+    const spinner = loading && !errorNetwork ? <Spinner /> : null;
     const content =
-      !loading && !getError ? <PlanetView planet={planet} /> : null;
+      !loading && !errorNetwork ? <PlanetView planet={planet} /> : null;
+
+    if (this.state.errorFront) {
+      return <ErrorFront />;
+    }
 
     return (
       <div className="random-planet jumbotron rounded">
-        {error}
+        {errorNet}
         {spinner}
         {content}
       </div>

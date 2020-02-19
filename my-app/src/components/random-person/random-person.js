@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 
 import Spinner from "../spinner";
-import Error from "../error";
+import ErrorNetwork from "../error-network";
+import ErrorFront from "../error-front";
 import PersonView from "../person-view";
 import SwapiService from "../../services/swapi-service";
 
@@ -13,12 +14,22 @@ export default class RandomPerson extends Component {
   state = {
     person: {},
     loading: true,
-    getError: false
+    errorNetwork: false,
+    errorFront: false
   };
 
-  constructor() {
-    super();
-    this.updatePerson();
+  componentDidMount() {
+    this.interval = setInterval(this.updatePerson, 5000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  componentDidCatch() {
+    this.setState({
+      errorFront: true
+    });
   }
 
   onPersonLoaded = person => {
@@ -29,25 +40,29 @@ export default class RandomPerson extends Component {
   };
   Error = () => {
     this.setState({
-      getError: true
+      errorNetwork: true
     });
   };
 
-  updatePerson() {
-    const id = 3;
+  updatePerson = () => {
+    const id = Math.floor(Math.random() * 20 + 1);
     this.swapiService.getPerson(id).then(this.onPersonLoaded, this.Error);
-  }
+  };
 
   render() {
-    const { person, loading, getError } = this.state;
-    const error = getError ? <Error /> : null;
-    const spinner = loading && !getError ? <Spinner /> : null;
+    const { person, loading, errorNetwork } = this.state;
+    const errorNet = errorNetwork ? <ErrorNetwork /> : null;
+    const spinner = loading && !errorNetwork ? <Spinner /> : null;
     const content =
-      !loading && !getError ? <PersonView person={person} /> : null;
+      !loading && !errorNetwork ? <PersonView person={person} /> : null;
+
+    if (this.state.errorFront) {
+      return <ErrorFront />;
+    }
 
     return (
       <div className="random-planet jumbotron rounded">
-        {error}
+        {errorNet}
         {spinner}
         {content}
       </div>

@@ -1,6 +1,7 @@
 import React from "react";
 
 import "./person-view.css";
+import Btn from "../btner";
 
 const PersonView = ({ person }) => {
   const { id, name, gender, birthYear, eyeColor } = person;
@@ -28,6 +29,7 @@ const PersonView = ({ person }) => {
           </li>
         </ul>
       </div>
+      <Btn />
     </React.Fragment>
   );
 };

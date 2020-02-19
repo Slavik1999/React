@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 
 import Spinner from "../spinner";
-import Error from "../error";
+import ErrorNetwork from "../error-network";
+import ErrorFront from "../error-front";
 import SwapiService from "../../services/swapi-service";
 
 import "./person-list.css";
@@ -12,17 +13,23 @@ export default class PeopleList extends Component {
   state = {
     person: {},
     loading: true,
-    getError: false
+    errorNetwork: false,
+    errorFront: false
   };
 
-  constructor() {
-    super();
-    this.updatePerson();
+  componentDidMount() {
+    this.swapiService.getAllPeople().then(this.onPersonLoaded, this.Error);
+  }
+
+  componentDidCatch() {
+    this.setState({
+      errorFront: true
+    });
   }
 
   Error = () => {
     this.setState({
-      getError: true
+      errorNetwork: true
     });
   };
 
@@ -33,20 +40,23 @@ export default class PeopleList extends Component {
     });
   };
 
-  updatePerson() {
-    const id = 3;
-    this.swapiService.getAllPeople().then(this.onPersonLoaded, this.Error);
-  }
-
   render() {
-    const { person, loading, getError } = this.state;
-    const error = getError ? <Error /> : null;
-    const spinner = loading && !getError ? <Spinner /> : null;
-    const content = !loading && !getError ? <ItemView person={person} /> : null;
+    const { person, loading, errorNetwork } = this.state;
+    const { onSelectedItem } = this.props;
+    const errorNet = errorNetwork ? <ErrorNetwork /> : null;
+    const spinner = loading && !errorNetwork ? <Spinner /> : null;
+    const content =
+      !loading && !errorNetwork ? (
+        <ItemView onSelectedItem={onSelectedItem} person={person} />
+      ) : null;
+
+    if (this.state.errorFront) {
+      return <ErrorFront />;
+    }
 
     return (
       <div>
-        {error}
+        {errorNet}
         {spinner}
         {content}
       </div>
@@ -54,11 +64,16 @@ export default class PeopleList extends Component {
   }
 }
 
-const ItemView = ({ person }) => {
+const ItemView = ({ person, onSelectedItem }) => {
   const elements = person.map(item => {
-    const { name } = item;
+    const { name, id } = item;
     return (
-      <li className="list-group-item" key={name} name={name}>
+      <li
+        className="list-group-item"
+        key={id}
+        name={name}
+        onClick={() => onSelectedItem(id)}
+      >
         {name}
       </li>
     );

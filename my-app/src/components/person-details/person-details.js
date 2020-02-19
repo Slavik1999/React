@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 
 import Spinner from "../spinner";
-import Error from "../error";
+import ErrorNetwork from "../error-network";
+import ErrorFront from "../error-front";
+import ChooseItem from "../choose-item";
 import PersonView from "../person-view";
 import SwapiService from "../../services/swapi-service";
 
@@ -13,17 +15,32 @@ export default class PlanetDetails extends Component {
   state = {
     person: {},
     loading: true,
-    error: false
+    errorNetwork: false,
+    errorFront: false,
+    chooseItem: false
   };
 
-  constructor() {
-    super();
-    this.updatePerson();
+  componentDidUpdate(prevProps) {
+    if (prevProps.selectedItem !== this.props.selectedItem) {
+      this.setState({
+        loading: true,
+        chooseItem: true
+      });
+      this.swapiService
+        .getPerson(this.props.selectedItem)
+        .then(this.onPersonLoaded, this.Error);
+    }
+  }
+
+  componentDidCatch() {
+    this.setState({
+      errorFront: true
+    });
   }
 
   Error = () => {
     this.setState({
-      getError: true
+      errorNetwork: true
     });
   };
 
@@ -34,21 +51,22 @@ export default class PlanetDetails extends Component {
     });
   };
 
-  updatePerson() {
-    const id = 3;
-    this.swapiService.getPerson(id).then(this.onPersonLoaded, this.Error);
-  }
-
   render() {
-    const { person, loading, getError } = this.state;
-    const error = getError ? <Error /> : null;
-    const spinner = loading && !getError ? <Spinner /> : null;
+    const { person, loading, errorNetwork, chooseItem } = this.state;
+    const hooseItem = !chooseItem ? <ChooseItem /> : null;
+    const errorNet = errorNetwork && chooseItem ? <ErrorNetwork /> : null;
+    const spinner = loading && !errorNetwork && chooseItem ? <Spinner /> : null;
     const content =
-      !loading && !getError ? <PersonView person={person} /> : null;
+      !loading && !errorNetwork ? <PersonView person={person} /> : null;
+
+    if (this.state.errorFront) {
+      return <ErrorFront />;
+    }
 
     return (
       <div className="random-planet jumbotron rounded">
-        {error}
+        {hooseItem}
+        {errorNet}
         {spinner}
         {content}
       </div>

@@ -5,20 +5,20 @@ import ErrorNetwork from "../error-network";
 import ErrorFront from "../error-front";
 import SwapiService from "../../services/swapi-service";
 
-import "./planet-list.css";
+import "./starship-list.css";
 
-export default class PlanetList extends Component {
+export default class StarshipList extends Component {
   swapiService = new SwapiService();
 
   state = {
-    planet: {},
+    starship: {},
     loading: true,
     errorNetwork: false,
     errorFront: false
   };
 
   componentDidMount() {
-    this.swapiService.getAllPlanets().then(this.onPlanetLoaded, this.Error);
+    this.swapiService.getAllStarships().then(this.onStarshipLoaded, this.Error);
   }
 
   componentDidCatch() {
@@ -33,21 +33,21 @@ export default class PlanetList extends Component {
     });
   };
 
-  onPlanetLoaded = planet => {
+  onStarshipLoaded = starship => {
     this.setState({
-      planet,
+      starship,
       loading: false
     });
   };
 
   render() {
-    const { planet, loading, errorNetwork } = this.state;
+    const { starship, loading, errorNetwork } = this.state;
     const { onSelectedItem } = this.props;
     const errorNet = errorNetwork ? <ErrorNetwork /> : null;
     const spinner = loading && !errorNetwork ? <Spinner /> : null;
     const content =
       !loading && !errorNetwork ? (
-        <ItemView onSelectedItem={onSelectedItem} planet={planet} />
+        <ItemView onSelectedItem={onSelectedItem} starship={starship} />
       ) : null;
 
     if (this.state.errorFront) {
@@ -64,8 +64,8 @@ export default class PlanetList extends Component {
   }
 }
 
-const ItemView = ({ planet, onSelectedItem }) => {
-  const elements = planet.map(item => {
+const ItemView = ({ starship, onSelectedItem }) => {
+  const elements = starship.map(item => {
     const { name, id } = item;
     return (
       <li
