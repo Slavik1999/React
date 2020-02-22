@@ -3,8 +3,8 @@ import React from "react";
 import "./person-view.css";
 import Btn from "../btner";
 
-const PersonView = ({ person }) => {
-  const { id, name, gender, birthYear, eyeColor } = person;
+const ItemView = ({ item }) => {
+  const { id, name, gender, birthYear, eyeColor } = item;
 
   return (
     <React.Fragment>
@@ -34,4 +34,4 @@ const PersonView = ({ person }) => {
   );
 };
 
-export default PersonView;
+export default ItemView;

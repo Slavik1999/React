@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 
 import Spinner from "../spinner";
-import ErrorNetwork from "../error-network";
-import ErrorFront from "../error-front";
 import PlanetView from "../starship-view";
 import ChooseItem from "../choose-item";
 import SwapiService from "../../services/swapi-service";
@@ -15,8 +13,6 @@ export default class StarshipDetails extends Component {
   state = {
     starship: {},
     loading: true,
-    errorNetwork: false,
-    errorFront: false,
     chooseItem: false
   };
 
@@ -28,7 +24,7 @@ export default class StarshipDetails extends Component {
       });
       this.swapiService
         .getStarship(this.props.selectedItem)
-        .then(this.onStarshipLoaded, this.onError);
+        .then(this.onStarshipLoaded);
     }
   }
 
@@ -38,12 +34,6 @@ export default class StarshipDetails extends Component {
     });
   }
 
-  onError = () => {
-    this.setState({
-      errorNetwork: true
-    });
-  };
-
   onStarshipLoaded = starship => {
     this.setState({
       starship,
@@ -52,21 +42,14 @@ export default class StarshipDetails extends Component {
   };
 
   render() {
-    const { starship, loading, errorNetwork, chooseItem } = this.state;
+    const { starship, loading, chooseItem } = this.state;
     const hooseItem = !chooseItem ? <ChooseItem /> : null;
-    const errorNet = errorNetwork && chooseItem ? <ErrorNetwork /> : null;
-    const spinner = loading && !errorNetwork && chooseItem ? <Spinner /> : null;
-    const content =
-      !loading && !errorNetwork ? <PlanetView starship={starship} /> : null;
-
-    if (this.state.errorFront) {
-      return <ErrorFront />;
-    }
+    const spinner = loading && chooseItem ? <Spinner /> : null;
+    const content = !loading ? <PlanetView starship={starship} /> : null;
 
     return (
       <div className="random-planet jumbotron rounded">
         {hooseItem}
-        {errorNet}
         {spinner}
         {content}
       </div>
