@@ -2,56 +2,90 @@ import React, { Component } from "react";
 import swapiService from "../../services/swapi-service";
 
 import Header from "../header";
-
-import Row from "../row";
+import Record from "../record-item";
 import ErrorBoundry from "../error-boundry";
-
-import ItemList from "../item-list";
-import ItemDetails from "../item-details";
+import ItemPage from "../item-page";
 
 import RandomPlanet from "../random-planet";
-import PlanetDetails from "../planet-details";
-
-import StarshipDetails from "../starship-details";
 
 import "./app.css";
 
 class App extends Component {
   swapiService = new swapiService();
-  state = {
-    selectedItem: {}
-  };
+  // state = {
+  //   selectedItem: {}
+  // };
 
-  onSelectedItem = id => {
-    this.setState({
-      selectedItem: id
-    });
-  };
+  // onSelectedItem = id => {
+  //   this.setState({
+  //     selectedItem: id
+  //   });
+  // };
 
   render() {
-    const peopleList = (
+    const {
+      getAllPeople,
+      getPerson,
+      getPersonImage,
+      getAllPlanets,
+      getPlanet,
+      getPlanetImage,
+      getAllStarships,
+      getStarship,
+      getStarshipImage
+    } = this.swapiService;
+    const randomPlanet = (
       <ErrorBoundry>
-        <ItemList
-          getData={this.swapiService.getAllPeople()}
-          onSelectedItem={this.onSelectedItem}
-          renderItem={item => `${item.name}`}
-        />
+        <RandomPlanet getItem={getPlanet} getImage={getPlanetImage}>
+          <Record label="Name" field="name" />
+          <Record label="Population" field="population" />
+          <Record label="Rotation Period" field="rotationPeriod" />
+          <Record label="Diameter" field="diameter" />
+        </RandomPlanet>
       </ErrorBoundry>
     );
-    const peopleDetails = (
-      <ErrorBoundry>
-        <ItemDetails selectedItem={this.state.selectedItem} />
-      </ErrorBoundry>
+    const planetPage = (
+      <ItemPage
+        getList={getAllPlanets}
+        getItem={getPlanet}
+        getImage={getPlanetImage}
+      >
+        <Record label="Name" field="name" />
+        <Record label="Population" field="population" />
+        <Record label="Rotation Period" field="rotation_period" />
+        <Record label="Diameter" field="diameter" />
+      </ItemPage>
+    );
+    const personPage = (
+      <ItemPage
+        getList={getAllPeople}
+        getItem={getPerson}
+        getImage={getPersonImage}
+      >
+        <Record label="Name" field="name" />
+        <Record label="Gender" field="gender" />
+        <Record label="Birth Year" field="birthYear" />
+        <Record label="Eye Color" field="eyeColor" />
+      </ItemPage>
+    );
+    const starshipPage = (
+      <ItemPage
+        getList={getAllStarships}
+        getItem={getStarship}
+        getImage={getStarshipImage}
+      >
+        <Record label="Name" field="name" />
+        <Record label="Model" field="model" />
+        <Record label="Length" field="length" />
+        <Record label="Cost" field="cost" />
+      </ItemPage>
     );
 
     return (
       <div className="container">
         <Header />
-        <ErrorBoundry>
-          <RandomPlanet />
-        </ErrorBoundry>
-
-        <Row left={peopleList} right={peopleDetails} />
+        {randomPlanet}
+        {planetPage}
       </div>
     );
   }
