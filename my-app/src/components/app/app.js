@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import Header from "../header";
+import SwapiService from "../../services/swapi-service";
 // import { SwapiServiceProvider } from "../../context";
 import {
   PlanetPage,
@@ -12,6 +13,7 @@ import {
 import "./app.css";
 
 class App extends Component {
+  swapiService = new SwapiService();
   render() {
     const randomPlanet = <RandomPlanet />;
     const planetPage = <PlanetPage />;
@@ -22,7 +24,7 @@ class App extends Component {
       <div className="container">
         <Header />
         {randomPlanet}
-        {personPage}
+        {planetPage}
       </div>
     );
     // return (
