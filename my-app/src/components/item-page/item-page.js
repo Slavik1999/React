@@ -3,9 +3,6 @@ import React, { Component } from "react";
 import Row from "../row";
 import ErrorBoundry from "../error-boundry";
 
-import ItemList from "../item-list";
-import ItemDetails from "../item-details";
-
 import "./item-page.css";
 
 class ItemPage extends Component {
@@ -20,24 +17,15 @@ class ItemPage extends Component {
   };
 
   render() {
-    const { getList, getItem, getImage, children } = this.props;
+    const { GetList, GetItem, children } = this.props;
     const itemList = (
       <ErrorBoundry>
-        <ItemList
-          getData={getList}
-          onSelectedItem={this.onSelectedItem}
-          renderItem={item => `${item.name}`}
-        />
+        <GetList onSelectedItem={this.onSelectedItem} />
       </ErrorBoundry>
     );
     const itemDetails = (
       <ErrorBoundry>
-        <ItemDetails
-          getData={getItem}
-          selectedItem={this.state.selectedItem}
-          getImage={getImage}
-          children={children}
-        />
+        <GetItem selectedItem={this.state.selectedItem} children={children} />
       </ErrorBoundry>
     );
 
