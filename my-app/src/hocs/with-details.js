@@ -11,13 +11,36 @@ const WithDetails = (View, getItem, getImage) => {
       chooseItem: false
     };
 
+    componentDidMount() {
+      if (this.props.selectedItem) {
+        getItem(this.props.selectedItem).then(this.onItemLoaded);
+        this.setState({
+          loading: true,
+          chooseItem: true
+        });
+      }
+    }
+
     componentDidUpdate(prevProps) {
-      if (prevProps.selectedItem !== this.props.selectedItem) {
+      if (
+        prevProps.selectedItem !== this.props.selectedItem &&
+        this.props.selectedItem !== undefined
+      ) {
         this.setState({
           loading: true,
           chooseItem: true
         });
         getItem(this.props.selectedItem).then(this.onItemLoaded);
+      }
+      if (
+        prevProps.selectedItem !== this.props.selectedItem &&
+        this.props.selectedItem === undefined
+      ) {
+        this.setState({
+          item: {},
+          loading: true,
+          chooseItem: false
+        });
       }
     }
 
@@ -33,9 +56,10 @@ const WithDetails = (View, getItem, getImage) => {
       const { children } = this.props;
       const hooseItem = !chooseItem ? <ChooseItem /> : null;
       const spinner = loading && chooseItem ? <Spinner /> : null;
-      const content = !loading ? (
-        <View children={children} getImage={getImage} item={item} />
-      ) : null;
+      const content =
+        !loading && chooseItem ? (
+          <View children={children} getImage={getImage} item={item} />
+        ) : null;
 
       return (
         <div className="random-planet jumbotron rounded">
@@ -47,4 +71,5 @@ const WithDetails = (View, getItem, getImage) => {
     }
   };
 };
+
 export default WithDetails;

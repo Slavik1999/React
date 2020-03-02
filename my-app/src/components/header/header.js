@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import "./header.css";
 
@@ -6,19 +7,20 @@ const Header = () => {
   return (
     <div className="header d-flex">
       <h2>
-        <a href="#">StarDB</a>
+        <Link to="/">StarDB</Link>
       </h2>
       <ul className="d-flex">
         <li>
-          <a href="#">People</a>
+          <Link to="/peoples">People</Link>
         </li>
         <li>
-          <a href="#">Planets</a>
+          <Link to="/planets">Planets</Link>
         </li>
         <li>
-          <a href="#">Starships</a>
+          <Link to="/starships">Starships</Link>
         </li>
       </ul>
+      );
     </div>
   );
 };

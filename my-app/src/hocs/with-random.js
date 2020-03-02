@@ -5,7 +5,7 @@ import Spinner from "../components/spinner";
 const WithRandom = (View, getItem, getImage) => {
   return class extends Component {
     state = {
-      planet: {},
+      item: {},
       loading: true
     };
 
@@ -18,24 +18,23 @@ const WithRandom = (View, getItem, getImage) => {
       clearInterval(this.interval);
     }
 
-    onPlanetLoaded = planet => {
+    onPlanetLoaded = item => {
       this.setState({
-        planet,
+        item,
         loading: false
       });
     };
 
     updatePlanet = () => {
-      const id = Math.floor(Math.random() * 60 + 1);
+      const id = Math.floor(Math.random() * 20 + 1);
       getItem(id).then(this.onPlanetLoaded);
     };
 
     render() {
-      const { planet, loading } = this.state;
-      const { children } = this.props;
+      const { item, loading } = this.state;
       const spinner = loading ? <Spinner /> : null;
       const content = !loading ? (
-        <View getImage={getImage} children={children} item={planet} />
+        <View getImage={getImage} item={item} />
       ) : null;
 
       return (

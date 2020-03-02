@@ -1,11 +1,11 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import Header from "../header";
 import SwapiService from "../../services/swapi-service";
-// import { SwapiServiceProvider } from "../../context";
 import {
   PlanetPage,
-  PersonPage,
+  PeoplePage,
   StarshipPage,
   RandomPlanet
 } from "../sw-components";
@@ -15,27 +15,19 @@ import "./app.css";
 class App extends Component {
   swapiService = new SwapiService();
   render() {
-    const randomPlanet = <RandomPlanet />;
-    const planetPage = <PlanetPage />;
-    const personPage = <PersonPage />;
-    const starshipPage = <StarshipPage />;
-
     return (
       <div className="container">
-        <Header />
-        {randomPlanet}
-        {planetPage}
+        <Router>
+          <Header />
+          <Route path="/" component={RandomPlanet} />
+          <Route path="/" component={() => <h1>Welcom!</h1>} exact />
+
+          <Route path="/peoples/:id?" component={PeoplePage} />
+          <Route path="/planets/:id?" component={PlanetPage} />
+          <Route path="/starships/:id?" component={StarshipPage} />
+        </Router>
       </div>
     );
-    // return (
-    //   <SwapiServiceProvider value={this.swapiService}>
-    //     <div className="container">
-    //       <Header />
-    //       {randomPlanet}
-    //       {personPage}
-    //     </div>
-    //   </SwapiServiceProvider>
-    // );
   }
 }
 

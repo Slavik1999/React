@@ -1,10 +1,21 @@
 import React from "react";
-import ItemView from "../item-view";
 
 import "./item-details.css";
 
-const ItemDetails = ({ children, getImage, item }) => {
-  return <ItemView children={children} getImage={getImage} item={item} />;
+const ItemView = ({ item, getImage, children }) => {
+  return (
+    <React.Fragment>
+      <img className="item-image" src={getImage(item)} />
+      <div>
+        <h4>{item.name}</h4>
+        <ul className="list-group list-group-flush">
+          {React.Children.map(children, child => {
+            return React.cloneElement(child, { item });
+          })}
+        </ul>
+      </div>
+    </React.Fragment>
+  );
 };
 
-export default ItemDetails;
+export default ItemView;
